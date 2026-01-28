@@ -23,7 +23,7 @@ requirements:
     - flex
     - make
   host:
-    - glib
+    - glib {{ glib }}
     - gobject-introspection
 
 test:
