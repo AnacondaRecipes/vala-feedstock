@@ -1,5 +1,5 @@
 {% set name = "vala" %}
-{% set version = "0.56.17" %}
+{% set version = "0.56.18" %}
 {% set minor_version = '.'.join(version.split('.')[:2]) %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://download.gnome.org/sources/{{ name }}/{{ minor_version }}/{{ name }}-{{ version }}.tar.xz
-  sha256: 26100c4e4ef0049c619275f140d97cf565883d00c7543c82bcce5a426934ed6a
+  sha256: f2affe7d40ab63db8e7b9ecc3f6bdc9c2fc7e3134c84ff2d795f482fe926a382
 
 build:
   skip: true  # [win]
@@ -29,8 +29,12 @@ requirements:
 test:
   files:
     - test.vala
+  requires:
+    - glib
+    - pkg-config
   commands:
-    - valac test.vala && ./test
+    - valac --pkg gobject-2.0 -X -Wl,-rpath -X -Wl,${PREFIX}/lib test.vala
+    - ./test
 
 about:
   home: https://gitlab.gnome.org/GNOME/vala
