@@ -31,6 +31,7 @@ test:
     - test.vala
   requires:
     - glib
+    - pkg-config
   commands:
     - valac --pkg gobject-2.0 -X -Wl,-rpath -X -Wl,${PREFIX}/lib test.vala
     - ./test
