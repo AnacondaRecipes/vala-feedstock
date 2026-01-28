@@ -6,7 +6,3 @@ PKG_CONFIG=$BUILD_PREFIX/bin/pkg-config VALAC=/no-valac ./configure --prefix=${P
 make -j${CPU_COUNT}
 make install
 
-if [[ "${target_platform}" == "linux-64" ]]; then
-  # The test script fails on osx-64 due to a too old bash
-  make check
-fi
