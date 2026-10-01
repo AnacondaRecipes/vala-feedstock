@@ -4,4 +4,4 @@ upstream_sources:
       identifier: GNOME/vala
       host: gitlab.gnome.org
       use_max_tag: true
-      include_regex: ^\d+(?:\.\d+)+$
+      include_regex: ^\d+\.\d*[02468](?:\.\d+)*$
