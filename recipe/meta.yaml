@@ -33,6 +33,7 @@ test:
     - glib
     - pkg-config
   commands:
+    # assert the built valac is the recipe version and the libvala pkg-config module got installed
     - valac --version | grep -F "{{ version }}"
     - pkg-config --modversion libvala-{{ minor_version }}
     - valac --pkg gobject-2.0 -X -Wl,-rpath -X -Wl,${PREFIX}/lib test.vala
