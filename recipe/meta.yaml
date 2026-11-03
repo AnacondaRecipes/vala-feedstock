@@ -1,14 +1,14 @@
 {% set name = "vala" %}
-{% set version = "0.56.18" %}
+{% set version = "0.56.19" %}
 {% set minor_version = '.'.join(version.split('.')[:2]) %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://download.gnome.org/sources/{{ name }}/{{ minor_version }}/{{ name }}-{{ version }}.tar.xz
-  sha256: f2affe7d40ab63db8e7b9ecc3f6bdc9c2fc7e3134c84ff2d795f482fe926a382
+  sha256: 5ad7cbbfcc0de61b403d6797c9ef60455bfbebd8e162aec33b5b0b097adfb9d5
 
 build:
   skip: true  # [win]
@@ -33,6 +33,9 @@ test:
     - glib
     - pkg-config
   commands:
+    # assert the built valac is the recipe version and the libvala pkg-config module got installed
+    - valac --version | grep -F "{{ version }}"
+    - pkg-config --modversion libvala-{{ minor_version }}
     - valac --pkg gobject-2.0 -X -Wl,-rpath -X -Wl,${PREFIX}/lib test.vala
     - ./test
 
@@ -51,5 +54,11 @@ about:
   dev_url: https://gitlab.gnome.org/GNOME/vala
 
 extra:
+  # False positives: the linter cannot render the minor_version jinja in the
+  # source URL, and gobject-introspection is only queried for its girdir
+  # pkg-config var (never linked against).
+  skip-lints:
+    - reachable_url
+    - host_section_needs_exact_pinnings
   recipe-maintainers:
     - xhochy
